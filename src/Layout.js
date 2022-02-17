@@ -5,9 +5,11 @@ import UsersContainer from "./components/Users/UsersContainer";
 import UserProfileContainer from "./components/UserProfile/UserProfileContainer";
 import styled from "styled-components";
 import Context from "./context";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import getUsers from "./api/users";
 import getPosts from "./api/posts";
+import { useDispatch, useSelector } from "react-redux";
+import { setUsers, setPosts } from "./store/store";
 
 const Header = styled.header`
   grid-column: 1 / span 2;
@@ -27,21 +29,20 @@ const Wrapper = styled.section`
 `;
 
 const Layout = () => {
-  const [users, setUsers] = useState([]);
-  const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    getUsers().then((user) => setUsers(user));
-    getPosts().then((post) => setPosts(post));
-  }, []);
   
-  const value = {
-    users,
-    posts,
-  };
+  const dispatch = useDispatch()
+  
+  useEffect(() => {
+    getUsers().then((user) => dispatch(setUsers(user)));
+    getPosts().then((post) => dispatch(setPosts(post)));
+  }, []);
 
+  const value = useSelector(state=>{
+    return state
+  })
+  
   return (
-    <Context.Provider value={value}>
+    <Context.Provider value = {value} >
       <Wrapper>
         <Header>Header</Header>
         <Navbar />
@@ -53,8 +54,10 @@ const Layout = () => {
           </Route>
         </Routes>
       </Wrapper>
-    </Context.Provider>
+    </Context.Provider>   
   );
 };
+
+
 
 export default Layout;

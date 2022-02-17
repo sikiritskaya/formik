@@ -1,6 +1,7 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import styled from 'styled-components'
 import * as Yup from 'yup'
+import CloseIcon from '@mui/icons-material/Close'
 
 const Modal = styled.div`
   height: 100vh;
@@ -25,10 +26,10 @@ const PostForm = styled(Form)`
 }
 `
 
-const Cancel = styled.span`
+const Cancel = styled(CloseIcon)`
   position: absolute;
-  top: -6px;
-  right: 6px;
+  right: 0;
+  top: 0;
   font-size: 20px;
   cursor: pointer;
 `
@@ -54,33 +55,32 @@ const validationSchema = Yup.object().shape({
     .required('Required'),
 })
 
-const ModalNewPost = (props) => {
+const ModalNewPost = ({ onSubmit, setIsModalActive }) => {
   return (
     <Modal>
       <Formik
         initialValues={initialValues}
-        onSubmit={props.onSubmit}
+        onSubmit={onSubmit}
         validationSchema={validationSchema}
-        validateOnMount   
-        dirty
-        isValid
-      >{props=>{
-        return(
-          <PostForm>
-          <Cancel onClick={() => props.setIsModalActive(false)}>x</Cancel>
-          <Field type="text" placeholder="add title" name="title"></Field>
-          <Error>
-            <ErrorMessage name="title" />
-          </Error>
-          <Field as="textarea" placeholder="add text" name="body"></Field>
-          <Error>
-            <ErrorMessage name="body" />
-          </Error>
-          <button type="submit" disabled = {!props.isValid}>Submit</button>
-        </PostForm>
-        )
-      }}
-       
+      >
+        {({isValid}) => {
+          return (
+            <PostForm>
+              <Cancel onClick = {() => {setIsModalActive(false)}} />
+              <Field type="text" placeholder="add title" name="title"></Field>
+              <Error>
+                <ErrorMessage name="title" />
+              </Error>
+              <Field as="textarea" placeholder="add text" name="body"></Field>
+              <Error>
+                <ErrorMessage name="body" />
+              </Error>
+              <button type="submit" disabled={!isValid}>
+                Submit
+              </button>
+            </PostForm>
+          )
+        }}
       </Formik>
     </Modal>
   )
