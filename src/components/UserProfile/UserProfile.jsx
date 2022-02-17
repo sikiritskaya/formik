@@ -10,7 +10,7 @@ const Title = styled.div`
 `;
 
 const Wrapper = styled.div`
-  border: solid 1px grey;
+  border: solid 1px rgb(128,128,128);
   border-radius: 5px;
   padding: 20px;
 `;

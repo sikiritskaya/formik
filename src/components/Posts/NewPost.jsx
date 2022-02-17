@@ -20,7 +20,7 @@ const PostForm = styled(Form)`
   border: solid 1px;
   padding: 20px;
   border-radius: 5px;
-  background-color: #fff;
+  background-color: rgba(255,255,255);
   position: absolute;
   transition:3s;
 }
@@ -35,7 +35,7 @@ const Cancel = styled(CloseIcon)`
 `
 
 const Error = styled.div`
-  color: red;
+  color: rgba(255, 0, 0, 1);
 `
 
 const initialValues = {
@@ -63,10 +63,14 @@ const ModalNewPost = ({ onSubmit, setIsModalActive }) => {
         onSubmit={onSubmit}
         validationSchema={validationSchema}
       >
-        {({isValid}) => {
+        {({ isValid }) => {
           return (
             <PostForm>
-              <Cancel onClick = {() => {setIsModalActive(false)}} />
+              <Cancel
+                onClick={() => {
+                  setIsModalActive(false)
+                }}
+              />
               <Field type="text" placeholder="add title" name="title"></Field>
               <Error>
                 <ErrorMessage name="title" />

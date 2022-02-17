@@ -4,11 +4,11 @@ import styled from "styled-components";
 const Nav = styled.div`
   padding: 20px;
   .active {
-    color: gold;
+    color: rgb(128,0,128);
   }
 `;
 const StyledLink = styled(NavLink)`
-  color: #000;
+  color: rgb(0,0,0);
   font-weight: bold;
   font-size: 20px;
   :hover {
